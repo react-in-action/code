@@ -1,0 +1,22 @@
+{
+  "id": 123,
+  "content": "What we hope ever to do with ease, we must first learn to do with diligence. — Samuel Johnson",
+  "user": "Mark Thomas",
+  "comments": [{
+    "id": 0,
+    "user": "David",
+    "content": "such. win."
+  }, {
+    "id": 1,
+    "user": "Peter",
+    "content": "Who was Samuel Johnson?"
+  }, {
+    "id": 2,
+    "user": "Mitchell",
+    "content": "@Peter get off Letters and do your homework!"
+  }, {
+    "id": 3,
+    "user": "Peter",
+    "content": "@mitchell ok dad :P"
+  }]
+}
