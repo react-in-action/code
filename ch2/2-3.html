@@ -1,15 +1,31 @@
-<script type="text/javascript">
-    var root =
-        React.createElement('div', {},
-            React.createElement('h1', {}, "Hello, world!",
-                React.createElement('a', {
-                        href: 'mailto:mark@ifelse.io'
-                    },
-                    React.createElement('h1', {}, "React In Action"),
-                    React.createElement('em', {}, "...and now it really is!")
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>React In Action</title>
+</head>
+
+<body>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/g/react@15.3.1(react.js+react-dom.js)"></script>
+    <div id="ourFirstApp"></div>
+
+    <script type="text/javascript">
+        var mountTarget = document.getElementById('ourFirstApp');
+        var root =
+            React.createElement('div', {},
+                React.createElement('h1', {}, "Hello, world!",
+                    React.createElement('a', {
+                            href: 'mailto:mark@ifelse.io'
+                        },
+                        React.createElement('h1', {}, "React In Action"),
+                        React.createElement('em', {}, "...and now it really is!")
+                    )
                 )
-            )
-        );
-    var mountTarget = document.getElementById('ourFirstApp');
-    ReactDOM.render(root, mountTarget);
-</script>
+            );
+        var mountTarget = document.getElementById('ourFirstApp');
+        ReactDOM.render(root, mountTarget);
+    </script>
+</body>
+
+</html>

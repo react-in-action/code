@@ -14,7 +14,7 @@ ReactDOM.render(<Greeting for="Mark" />, mountNode);
 
 // Or using the ES6 arrow syntax
 
-const Greeting = (props) => <div>Hello {props.for}</div>;//#A
+const Greeting = (props) => <div>Hello {props.for}</div>;
 //... specify props and default props same as above
 
 ReactDOM.render(<Greeting name="Mark" />, mountNode);

@@ -11,7 +11,7 @@ const ChildComponent = React.createClass({
 
 const ParentComponent = React.createClass({
     onInputChange: function(e) {
-        this.setState({text: e.target.value}); //#A
+        this.setState({text: e.target.value}); 
     },
     render: function() {
         console.log('ParentComponent: render');

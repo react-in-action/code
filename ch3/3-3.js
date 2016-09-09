@@ -4,7 +4,7 @@ let user = null;
 // Load user data from somewhere using the new fetch API
 // (essentially the newer, better version of XMLHttpRequest)
 
-fetch(someUrl) //#B
+fetch(someUrl) 
     .then(response => user = response.json())
     .catch(err => console.error(err));
 
@@ -31,6 +31,6 @@ application.updateUser(user);
 // Perform some logout action
 application.logout = function() {
     user = null
-}; //#D
+}; 
 
 application.logout();

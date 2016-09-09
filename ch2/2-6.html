@@ -1,29 +1,53 @@
-<!-- ... -->
-    <script type="text/javascript">
-    'use strict';
+<!DOCTYPE html>
+<html>
 
-    var data = { //#A
-      "post": {  //#A
-        "id": 123,   //#A
-        "content": "What we hope ever to do with ease, we must first learn to do with diligence. — Samuel Johnson",
-        "user": "Mark Thomas",
-      },
-      "comments": [{
-        "id": 0,
-        "user": "David",
-        "content": "such. win."
-      }, {
-        "id": 1,
-        "user": "Peter",
-        "content": "Who was Samuel Johnson?"
-      }, {
-        "id": 2,
-        "user": "Mitchell",
-        "content": "@Peter get off Letters and do your homework"
-      }, {
-        "id": 3,
-        "user": "Peter",
-        "content": "@mitchell ok :P"
-      }]
-    };
-<!-- ... -->
+<head>
+    <meta charset="utf-8">
+    <title>React In Action</title>
+</head>
+
+<body>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/g/react@15.3.1(react.js+react-dom.js)"></script>
+    <div id="ourFirstApp"></div>
+
+    <script type="text/javascript">
+        var mountTarget = document.getElementById('ourFirstApp');
+
+        var CreateComment = React.createClass({
+            propTypes: {
+                content: React.PropTypes.string,
+            },
+            getInitialState: function() {
+                return {
+                    content: '',
+                    author: ''
+                };
+            },
+            render: function() {
+                return React.createElement('form', {
+                        className: 'createComment',
+                    },
+                    React.createElement('input', {
+                        type: 'text',
+                        placeholder: 'Your name',
+                        value: this.state.author,
+                    }),
+                    React.createElement('input', {
+                        type: 'text',
+                        placeholder: 'Thoughts?'
+                    }),
+                    React.createElement('input', {
+                        type: 'submit',
+                        value: 'Post'
+                    })
+                );
+            }
+        });
+
+        var App = React.createElement(CreateComment);
+
+        ReactDOM.render(App, mountTarget);
+    </script>
+</body>
+
+</html>

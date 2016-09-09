@@ -8,9 +8,9 @@ componentDidMount() {
                 .then(posts => {
                     this.setState({
                         posts: {
-                            posts, //#B
+                            posts, 
                         },
-                        loaded: true, //#C
+                        loaded: true, 
                     });
                 });
             }
