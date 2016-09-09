@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>React In Action</title>
+</head>
+
+<body>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/g/react@15.3.1(react.js+react-dom.js)"></script>
+    <div id="ourFirstApp"></div>
+
+    <script type="text/javascript">
+        var mountTarget = document.getElementById('ourFirstApp');
+
+        var data = {
+            "post": {
+                "id": 123,
+                "content": "What we hope ever to do with ease, we must first learn to do with diligence. — Samuel Johnson",
+                "user": "Mark Thomas",
+            },
+            "comments": [{
+                "id": 0,
+                "user": "David",
+                "content": "such. win."
+            }, {
+                "id": 1,
+                "user": "Haley",
+                "content": "Love it."
+            }, {
+                "id": 2,
+                "user": "Peter",
+                "content": "Who was Samuel Johnson?"
+            }, {
+                "id": 3,
+                "user": "Mitchell",
+                "content": "@Peter get off Letters and do your homework"
+            }, {
+                "id": 4,
+                "user": "Peter",
+                "content": "@mitchell ok :P"
+            }]
+        };
+
+        var Post = React.createClass({
+            propTypes: {
+                user: React.PropTypes.string.isRequired,
+                content: React.PropTypes.string.isRequired,
+                id: React.PropTypes.number.isRequired,
+            },
+            render: function() {
+                return (
+                    React.createElement('div', {
+                            className: 'post'
+                        },
+                        React.createElement('h2', {
+                                className: 'postAuthor',
+                                id: this.props.id
+                            },
+                            this.props.user,
+                            React.createElement('span', {
+                                    className: 'postBody'
+                                },
+                                this.props.content
+                            )
+                        ),
+                        this.props.children
+                    )
+                );
+            }
+        });
+
+        var Comment = React.createClass({
+            propTypes: {
+                id: React.PropTypes.number.isRequired,
+                content: React.PropTypes.string.isRequired,
+                user: React.PropTypes.string.isRequired,
+            },
+            render: function() {
+                return (
+                    React.createElement('div', {
+                            className: 'comment'
+                        },
+                        React.createElement('h2', {
+                                className: 'commentAuthor'
+                            },
+                            this.props.user + ' : ',
+                            React.createElement('span', {
+                                    className: 'commentContent'
+                                },
+                                this.props.content
+                            )
+                        )
+                    )
+                );
+            }
+        });
+
+        var CreateComment = React.createClass({
+            propTypes: {
+                handleCommentSubmit: React.PropTypes.func.isRequired,
+                content: React.PropTypes.string,
+            },
+            getInitialState: function() {
+                return {
+                    content: '',
+                    author: ''
+                };
+            },
+            handleAuthorChange: function(event) {
+                this.setState({
+                    author: event.target.value
+                });
+            },
+            handleTextChange: function(event) {
+                this.setState({
+                    content: event.target.value
+                });
+            },
+            handleSubmit: function(event) {
+                event.preventDefault();
+                this.props.onCommentSubmit({
+                    author: this.state.author.trim(),
+                    content: this.state.content.trim()
+                });
+                this.setState({
+                    author: '',
+                    text: ''
+                });
+            },
+            render: function() {
+                return React.createElement('form', {
+                        className: 'createComment',
+                        onSubmit: this.handleSubmit
+                    },
+                    React.createElement('input', {
+                        type: 'text',
+                        placeholder: 'Your name',
+                        value: this.state.author,
+                        onChange: this.handleAuthorChange
+                    }),
+                    React.createElement('input', {
+                        type: 'text',
+                        placeholder: 'Thoughts?'
+                    }),
+                    React.createElement('input', {
+                        type: 'submit',
+                        value: 'Post'
+                    })
+                );
+            }
+        });
+
+        var App = React.createElement(CreateComment);
+
+        ReactDOM.render(App, mountTarget);
+    </script>
+</body>
+
+</html>

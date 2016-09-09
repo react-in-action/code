@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>React In Action</title>
+  </head>
+  <body>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/g/react@15.3.1(react.js+react-dom.js)"></script>
+    <div id="ourFirstApp"></div>
+
+    <script type="text/javascript">
+      var mountTarget = document.getElementById('ourFirstApp');
+
+var data = { //#A
+  "post": { //#A
+    "id": 123, //#A
+    "content": "What we hope ever to do with ease, we must first learn to do with diligence. — Samuel Johnson",
+    "user": "Mark Thomas",
+  },
+  "comments": [{ //#B
+    "id": 0,
+    "user": "David",
+    "content": "such. win."
+  }, { //#B
+    "id": 1,
+    "user": "Haley",
+    "content": "Love it."
+  }, { //#B
+    "id": 2,
+    "user": "Peter",
+    "content": "Who was Samuel Johnson?"
+  }, { //#B
+    "id": 3,
+    "user": "Mitchell",
+    "content": "@Peter get off Letters and do your homework"
+  }, { //#B
+    "id": 4,
+    "user": "Peter",
+    "content": "@mitchell ok :P"
+  }]
+};
+
+var Post = React.createClass({
+    propTypes: {
+        user: React.PropTypes.string.isRequired, //#A
+        content: React.PropTypes.string.isRequired, //#A
+        id: React.PropTypes.number.isRequired, //#A
+    },
+    render: function() {
+        return (
+            React.createElement('div', {
+                    className: 'post'
+                },
+                React.createElement('h2', {
+                        className: 'postAuthor',
+                        id: this.props.id
+                    }, //#B
+                    this.props.user, //#B
+                    React.createElement('span', {
+                            className: 'postBody'
+                        },
+                        this.props.content //#B
+                    )
+                ),
+                this.props.children
+            )
+        );
+    }
+});
+
+var Comment = React.createClass({
+    propTypes: {
+        id: React.PropTypes.number.isRequired,
+        content: React.PropTypes.string.isRequired,
+        user: React.PropTypes.string.isRequired,
+    },
+    render: function() {
+        return (
+            React.createElement('div', {
+                    className: 'comment'
+                },
+                React.createElement('h2', {
+                        className: 'commentAuthor'
+                    },
+                    this.props.user + ' : ',
+                    React.createElement('span', {
+                            className: 'commentContent'
+                        },
+                        this.props.content
+                    )
+                )
+            )
+        );
+    }
+});
+
+var CreateComment = React.createClass({
+  propTypes: {
+    handleCommentSubmit: React.PropTypes.func.isRequired,
+    content: React.PropTypes.string,
+  },
+  getInitialState: function() {
+    return { //#A
+      content: '', //#A
+      user: '' //#A
+    }; //#A
+  },
+  handleAuthorChange: function(event) { //#B
+    this.setState({ //#B
+      user: event.target.value //#B
+    }); //#B
+  }, //#B
+  handleTextChange: function(event) { //#C
+    this.setState({ //#C
+      content: event.target.value //#C
+    }); //#C
+  }, //#C
+  handleSubmit: function(event) { //#D
+    event.preventDefault(); //#D
+    this.props.onCommentSubmit({ //#D
+      user: this.state.user.trim(), //#D
+      content: this.state.content.trim() //#D
+    });
+    this.setState({ //#E
+      author: '', //#E
+      content: '' //#E
+    });
+  },
+  render: function() {
+    return React.createElement('form', {
+        className: 'createComment',
+        onSubmit: this.handleSubmit //#F
+      },
+      React.createElement('input', {
+        type: 'text',
+        placeholder: 'Your name',
+        value: this.state.user, //#F
+        onChange: this.handleAuthorChange //#F
+      }),
+      React.createElement('input', {
+        type: 'text',
+        placeholder: 'Thoughts?',
+        onChange: this.handleTextChange, //#F
+        value: this.state.content, //#F
+      }),
+      React.createElement('input', {
+        type: 'submit',
+        value: 'Post'
+      })
+    );
+  }
+});
+
+var CommentBox = React.createClass({
+  propTypes: {
+    post: React.PropTypes.object,
+    comments: React.PropTypes.arrayOf(React.PropTypes.object),
+  },
+  getInitialState: function() {
+    return {
+      comments: this.props.comments //#A
+    };
+  },
+  handleCommentSubmit: function(comment) {
+    console.log(comment);
+    var comments = this.state.comments; //#B
+    // note that we didn't directly modify state
+    comment.id = Date.now(); //#B
+    var newComments = comments.concat([comment]); //#B
+    this.setState({ //#B
+      comments: newComments //#B
+    }); //#B
+  },
+  render: function() {
+    return (
+      React.createElement('div', {
+          className: 'commentBox'
+        },
+        React.createElement(Post, {
+          id: this.props.post.id, //#C
+          content: this.props.post.content, //#C
+          user: this.props.post.user, //#C
+        }),
+        this.state.comments.map(function(comment) { //#D
+          return React.createElement(Comment, { //#D
+            key: comment.id, //#D
+            content: comment.content, //#D
+            user: comment.user, //#D
+          })
+        }),
+        React.createElement(CreateComment, {
+          onCommentSubmit: this.handleCommentSubmit //#E
+        })
+      )
+    );
+  }
+});
+
+var App = React.createElement(CreateComment);
+
+ReactDOM.render(React.createElement(CommentBox, {
+    comments: data.comments,
+    post: data.post,
+}), mountTarget);
+
+
+    </script>
+  </body>
+</html>
